@@ -217,7 +217,7 @@ module `mname()`
    logic signed [`$sig_fig`-1:0] 	next_box_R14S[1:0][1:0];
    typedef enum logic {
 			 WAIT_STATE, TEST_STATE
-		       } state_t;  
+		       } state_t;  s
    state_t                        state_R14H;     //State Designation (Waiting or Testing)
    state_t                        next_state_R14H;        //Next Cycles State 
    
@@ -261,7 +261,8 @@ module `mname()`
    
    ////// PLACE YOUR CODE HERE
 
- 
+   // Adding code - Anand
+   // 
 
 
 
