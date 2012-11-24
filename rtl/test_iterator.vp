@@ -262,9 +262,30 @@ module `mname()`
    ////// PLACE YOUR CODE HERE
 
    // Adding code - Anand
-   // 
+   // Define the helper signals
+   
+   // if at right edge go to next row up and furthest left
+   // set the ll x value as x
+   next_up_samp_R14S[0]=box_R13S[0][0]
+   // set y as current sample y + 1
+   next_up_samp_R14S[1]=sample_R14S[1]+1
 
+   // going to next point if not at edge
+   // set x as current sample x +1 pos
+   next_rt_samp_R14S[0]=sample_R14S[0]+1
+   // set y as same as current sample
+   next_rt_samp_R14S[1]=sample_R14S[1]
 
+   // Assume bounding box is calibrated to the grid
+   // compare the x value of the ur of box and the current sample point
+   // comparing different clock cycles (bu okay because box_R13S same?)
+   at_right_edg_R14H =  box_R13S[1][0]==sample_R14S[0]
+   // compare y val of ur of box and current sample point
+   at_top_edg_R14H = box_R13S[1][1]==sample_R14S[1]
+   // compare x and y val of ur and sample point
+   at_end_box_R14H = box_R13S[1]==sample_R14S
+
+   // End Added Code - Anand
 
 
 
