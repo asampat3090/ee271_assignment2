@@ -334,7 +334,9 @@ module `mname()`
       $display("boxR14 ll x: %d \n"	, box_R14S[0][0]);
       $display("boxR14 ll y: %d \n"	, box_R14S[0][1]);
       $display("boxR14 ur x: %d \n"	, box_R14S[1][0]);
-      $display("boxR14 ur y: %d \n"	, box_R14S[1][1]);	
+      $display("boxR14 ur y: %d \n"	, box_R14S[1][1]);
+      $display("state: %d \n"		, state_R14H);
+      $display("interval: %d \n" 	, interval_R14S);
    
       unique case( state_R14H )
 
