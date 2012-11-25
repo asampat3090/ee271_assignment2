@@ -233,7 +233,7 @@ module `mname()`
 			   .clk(clk) , .reset(rst), .en(1'b1),
 			   .out(box_R14S));
    
-   
+    
    //; my $d306 = generate( 'dff', "d306", 
    //;                        BitWidth=>1,
    //;                        PipelineDepth=>1,
@@ -260,34 +260,37 @@ module `mname()`
    // understanding the signals here
    
    ////// PLACE YOUR CODE HERE
+  
    
    // NOTE: ALL CODE SHOULD NOT BE DEPENDENT ON INPUTS - MOORE FSM
    
-   // Adding code - Anand
+   // Adding code Anand
    // Define the helper signals
    
    // if at right edge go to next row up and furthest left
    // set the ll x value as x
-   next_up_samp_R14S[0]=box_R14S[0][0];
-   // set y as current sample y + 1
-   next_up_samp_R14S[1]=sample_R14S[1]+1;
+   assign next_up_samp_R14S[0][`$sig_fig`-1:0] = box_R14S[0][0][`$sig_fig`-1:0];
+   // set y as current sample y + 1 unit over
+   assign next_up_samp_R14S[1][`$sig_fig`-1:0]=sample_R14S[1][`$sig_fig`-1:0]+1;
 
    // going to next point if not at edge
    // set x as current sample x +1 pos
-   next_rt_samp_R14S[0]=sample_R14S[0]+1;
+   assign next_rt_samp_R14S[0][`$sig_fig`-1:0]=sample_R14S[0][`$sig_fig`-1:0]+1;
    // set y as same as current sample
-   next_rt_samp_R14S[1]=sample_R14S[1];
+   assign next_rt_samp_R14S[1][`$sig_fig`-1:0]=sample_R14S[1][`$sig_fig`-1:0];
 
    // Assume bounding box is calibrated to the grid
    // compare the x value of the ur of box and the current sample point
-   // comparing different clock cycles (bu okay because box_R13S same?)
-   at_right_edg_R14H =  box_R14S[1][0]==sample_R14S[0];
+   assign at_right_edg_R14H =
+   box_R14S[1][0][`$sig_fig`-1:0]==sample_R14S[0][`$sig_fig`-1:0];   
 
    // compare y val of ur of box and current sample point
-   at_top_edg_R14H = box_R14S[1][1]==sample_R14S[1];
+   assign at_top_edg_R14H = box_R14S[1][1][`$sig_fig`-1:0]==sample_R14S[1][`$sig_fig`-1:0];
 
-   // compare x and y val of ur and sample point
-   at_end_box_R14H = box_R14S[1]==sample_R14S;
+   // compare x and y val of ur bbox and sample point
+   assign at_end_box_R14H =
+   /*box_R14S[1][1:0][`$sig_fig`-1:0]==sample_R14S[1:0][`$sig_fig`-1:0];*/
+   box_R14S[1][1][`$sig_fig`-1:0]==sample_R14S[1][`$sig_fig`-1:0] & box_R14S[1][0][`$sig_fig`-1:0]==sample_R14S[0][`$sig_fig`-1:0]
 
    // End Added Code - Anand
 
@@ -302,13 +305,14 @@ module `mname()`
 
    ////// COMPLETE THE FOLLOW ALWAYS_COMB BLOCK
    
-   always_comb begin
+   always_comb
+    begin
       unique case( state_R14H )
         ( WAIT_STATE ): begin
 	   // the first sample is equivalent to the ll of bbox
-	   next_sample_R14S    =  box_R14S[0];
+	   next_sample_R14S    =  box_R14S[0][`$sig_fig`-1:0];
 	   // the first sample at ll of bbox should be valid
-	   next_validSamp_R14H = 1;
+	   next_validSamp_R14H = 1'b1;
 	   next_isQuad_R14H    = isQuad_R14H;
 	   // if a new valid micropolygon is at input, move to TEST_STATE
 	   // else stay in WAIT_STATE - EXCEPTION TO MOORE FSM??
@@ -320,7 +324,7 @@ module `mname()`
 	   // takes in a new bounding box
 	   next_box_R14S       = box_R14S;
 	   // received a new bounding box, so no halt
-	   next_halt_RnnnnL    = 0
+	   next_halt_RnnnnL    = 1'b1;
 	end
 	( TEST_STATE ): begin
 	  // set to the next sample to test
@@ -333,16 +337,16 @@ module `mname()`
 		next_state_R14H     = TEST_STATE;
 	   else if (at_end_box_R14H)
 	   	// equivalent to the lower left vertex of poly
-	   	next_sample_R14S = 
+	   	next_sample_R14S = poly_R14S[0][1:0][`$sig_fig`-1:0];
 		// next sample is invalid - end of bbox
-		next_validSamp_R14H = 0;
+		next_validSamp_R14H = 1'b0;
 		// waiting for a new bbox and poly
 		next_state_R14H     = WAIT_STATE;	
 	   else
 		// simple case - move to the right
 		next_sample_R14S = next_rt_samp_R14S;
 		// next sample is valid
-		next_validSamp_R14H = 1;
+		next_validSamp_R14H = 1'b1;
 		// remain in test state
 		next_state_R14H     = TEST_STATE;
 	  
@@ -350,7 +354,7 @@ module `mname()`
 	   next_poly_R14S      = poly_R14S;
 	   next_color_R14U     = color_R14U; 
 	   next_box_R14S       = box_R14S;
-	   next_halt_RnnnnL    = 1  
+	   next_halt_RnnnnL    = 1'b0;
 	end      
       endcase // case ( state_R14H )
       
