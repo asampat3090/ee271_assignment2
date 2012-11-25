@@ -292,7 +292,7 @@ module `mname()`
   
 	 // Define pixel interval based on subSample_RnnnnU value
 
-	 interval_R14S = {{`$sigfig`}1'b0};    	 
+	 interval_R14S = {{`$sig_fig`}1'b0};    	 
    	 case (subSample_RnnnnU)
    	      4'b1000: interval_R14S[`$radix`]=1'b1;
 	      4'b0100: interval_R14S[`$radix`-1]=1'b1;
