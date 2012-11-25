@@ -325,20 +325,20 @@ module `mname()`
 
         ( WAIT_STATE ): begin
 	   // the first sample is equivalent to the ll of bbox
-	   next_sample_R14S[0] = box_R14S[0][0]; 
-	   next_sample_R14S[1] = box_R14S[0][1];
+	   next_sample_R14S[0] = box_R13S[0][0]; 
+	   next_sample_R14S[1] = box_R13S[0][1];
 	   // the first sample at ll of bbox should be valid
 	   next_validSamp_R14H = validPoly_R13H;
-	   next_isQuad_R14H    = isQuad_R14H;
+	   next_isQuad_R14H    = isQuad_R13H;
 	   // if a new valid micropolygon is at input, move to TEST_STATE
 	   // else stay in WAIT_STATE - EXCEPTION TO MOORE FSM??
 	   next_state_R14H     = (validPoly_R13H ? TEST_STATE : WAIT_STATE);
 	   // takes in a new polygon for testing
-	   next_poly_R14S      = poly_R14S;
+	   next_poly_R14S      = poly_R13S;
 	   // takes in new color info for incoming poly
-	   next_color_R14U     = color_R14U;
+	   next_color_R14U     = color_R13U;
 	   // takes in a new bounding box
-	   next_box_R14S       = box_R14S;
+	   next_box_R14S       = box_R13S;
 	   // received a new bounding box, so no halt
 	   next_halt_RnnnnL    = (validPoly_R13H ? 1'b0 : 1'b1); // AJD: shouldn't this depend on valid_poly?
 	end
