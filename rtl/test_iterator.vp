@@ -318,8 +318,9 @@ module `mname()`
    //////
 
    ////// COMPLETE THE FOLLOW ALWAYS_COMB BLOCK
+	
+      $display("%d", validPoly_R13H);
    
-   //always_comb begin
       unique case( state_R14H )
 
         ( WAIT_STATE ): begin
