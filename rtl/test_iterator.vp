@@ -305,11 +305,11 @@ module `mname()`
    	/*box_R14S[1][1:0][`$sig_fig`-1:0]==sample_R14S[1:0][`$sig_fig`-1:0];*/
    	box_R14S[1][1][`$sig_fig`-1:0]==sample_R14S[1][`$sig_fig`-1:0] &
    	box_R14S[1][0][`$sig_fig`-1:0]==sample_R14S[0][`$sig_fig`-1:0];
-   end //always_comb
+   //end //always_comb
    
 
    // Start the FSM in the WAIT_STATE
-   assign start_R14H = WAIT_STATE;
+   // assign start_R14H = WAIT_STATE;
 
    // End Added Code - Anand
 
@@ -324,7 +324,7 @@ module `mname()`
 
    ////// COMPLETE THE FOLLOW ALWAYS_COMB BLOCK
    
-   always_comb begin
+   //always_comb begin
       unique case( state_R14H )
         ( WAIT_STATE ): begin
 	   // the first sample is equivalent to the ll of bbox
@@ -332,11 +332,11 @@ module `mname()`
       box_R14S[0][0][`$sig_fig`-1:0];
 	   next_sample_R14S[1][`$sig_fig`-1:0] = box_R14S[0][1][`$sig_fig`-1:0];
 	   // the first sample at ll of bbox should be valid
-	   next_validSamp_R14H = validSamp_R14H;
+	   next_validSamp_R14H = validPoly_R13H;
 	   next_isQuad_R14H    = isQuad_R14H;
 	   // if a new valid micropolygon is at input, move to TEST_STATE
 	   // else stay in WAIT_STATE - EXCEPTION TO MOORE FSM??
-	   next_state_R14H     = validSamp_R14H ? TEST_STATE : WAIT_STATE;
+	   next_state_R14H     = validPoly_R13H ? TEST_STATE : WAIT_STATE;
 	   // takes in a new polygon for testing
 	   next_poly_R14S      = poly_R14S;
 	   // takes in new color info for incoming poly
