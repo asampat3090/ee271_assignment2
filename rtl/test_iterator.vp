@@ -248,7 +248,7 @@ module `mname()`
    logic signed [`$sig_fig`-1:0] 	next_up_samp_R14S[1:0]; //If jump up, next sample
    logic signed [`$sig_fig`-1:0] 	next_rt_samp_R14S[1:0]; //If jump right, next sample
    logic 				at_right_edg_R14H;      //Current sample at right edge of bbox?
-   logic 			at_top_edg_R14H;        //Current sample at top edge of bbox?
+   logic 				at_top_edg_R14H;        //Current sample at top edge of bbox?
    logic 				at_end_box_R14H;        //Current sample at end of bbox?
 
    //////
@@ -282,9 +282,9 @@ module `mname()`
 
    	// if at right edge go to next row up and furthest left
    	// set the ll x value as x
-   	next_up_samp_R14S[0][`$sig_fig`-1:0] = box_R14S[0][0][`$sig_fig`-1:0];
+   	next_up_samp_R14S[0] = box_R14S[0][0];
    	// set y as current sample y + 1 unit 
-	next_up_samp_R14S[1][`$sig_fig`-1:0]=sample_R14S[1][`$sig_fig`-1:0]+interval_R14S;
+	next_up_samp_R14S[1] = sample_R14S[1]+interval_R14S;
 
    	// going to next point if not at edge
    	// set x as current sample x +1 pos
@@ -313,9 +313,6 @@ module `mname()`
 
    // End Added Code - Anand
 
-
-
-
    
    //////
    ////// Then complete the following combinational logic defining the
@@ -326,17 +323,17 @@ module `mname()`
    
    //always_comb begin
       unique case( state_R14H )
+
         ( WAIT_STATE ): begin
 	   // the first sample is equivalent to the ll of bbox
-	   next_sample_R14S[0][`$sig_fig`-1:0] =
-      box_R14S[0][0][`$sig_fig`-1:0];
+	   next_sample_R14S[0][`$sig_fig`-1:0] = box_R14S[0][0][`$sig_fig`-1:0]; //AJD: why is this 3-dimensional?
 	   next_sample_R14S[1][`$sig_fig`-1:0] = box_R14S[0][1][`$sig_fig`-1:0];
 	   // the first sample at ll of bbox should be valid
 	   next_validSamp_R14H = validPoly_R13H;
 	   next_isQuad_R14H    = isQuad_R14H;
 	   // if a new valid micropolygon is at input, move to TEST_STATE
 	   // else stay in WAIT_STATE - EXCEPTION TO MOORE FSM??
-	   next_state_R14H     = validPoly_R13H ? TEST_STATE : WAIT_STATE;
+	   next_state_R14H     = validPoly_R13H ? TEST_STATE : WAIT_STATE; //AJD: is this a valid verilog construct?
 	   // takes in a new polygon for testing
 	   next_poly_R14S      = poly_R14S;
 	   // takes in new color info for incoming poly
@@ -344,16 +341,16 @@ module `mname()`
 	   // takes in a new bounding box
 	   next_box_R14S       = box_R14S;
 	   // received a new bounding box, so no halt
-	   next_halt_RnnnnL    = 1'b1;
+	   next_halt_RnnnnL    = 1'b1; // AJD: shouldn't this depend on valid_poly?
 	end
+
 	( TEST_STATE ): begin
 	  // set to the next sample to test
 
 	   if (at_end_box_R14H)
 	   begin
 	   	// equivalent to the ll vertex of poly - same as bbox ll
-		next_sample_R14S[0][`$sig_fig`-1:0] =
-      box_R14S[0][0][`$sig_fig`-1:0];
+		next_sample_R14S[0][`$sig_fig`-1:0] = box_R14S[0][0][`$sig_fig`-1:0]; //AJD: same 3d thing?
 		next_sample_R14S[1][`$sig_fig`-1:0] = box_R14S[0][1][`$sig_fig`-1:0];
 		// next sample is invalid - end of bbox
 		next_validSamp_R14H = 1'b0;
