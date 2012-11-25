@@ -265,12 +265,12 @@ module `mname()`
    // NOTE: ALL CODE SHOULD NOT BE DEPENDENT ON INPUTS - MOORE FSM
    
    // Adding code Anand
-   
+   logic signed [`$sig_fig`-1:0]       interval_R14S;
 
    always_comb begin
   
 	 // Define pixel interval based on subSample_RnnnnU value
-   	 logic signed [`$sig_fig`-1:0]       interval_R14S;
+   	 
    	 case (subSample_RnnnnU)
    	      4'b1000: interval_R14S[`$radix`]=1'b1;
 	      4'b0100: interval_R14S[`$radix`-1]=1'b1;
