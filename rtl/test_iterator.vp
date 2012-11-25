@@ -282,7 +282,7 @@ module `mname()`
 
    	// if at right edge go to next row up and furthest left
    	// set the ll x value as x
-   	next_up_samp_R14S[0] = box_R14S[0][0]; //added anand comment
+   	next_up_samp_R14S[0] = box_R14S[0][0]; //anand is silly
    	// set y as current sample y + 1 unit 
 	next_up_samp_R14S[1] = sample_R14S[1]+interval_R14S;
 
