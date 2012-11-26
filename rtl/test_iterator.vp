@@ -385,7 +385,7 @@ module `mname()`
       endcase // case ( state_R14H )
 
 	//output
-      $display("VALID POLY: %d \n"	, validSamp_R14H);
+      /*$display("VALID POLY: %d \n"	, validSamp_R14H);
       $display("STATE: %d \n"		, state_R14H);
       $display("at right: %d \n"	, at_right_edg_R14H);
       $display("at top: %d \n"		, at_top_edg_R14H);
@@ -405,7 +405,7 @@ module `mname()`
       $display("interval: %d \n" 	, interval_R14S);
       $display("subsample: %d \n"       , subSample_RnnnnU);
       $display("------------- \n");
-      
+      */
    end //always_comb
    
    
@@ -439,6 +439,7 @@ module `mname()`
    //////  RTL code for modified FSM Goes Here
    //////
    
+
    ////// PLACE YOUR CODE HERE MODIFIEDYEEEAAAAHH
 
    always_comb begin      
@@ -580,5 +581,4 @@ module `mname()`
 
 
 endmodule
-
 
