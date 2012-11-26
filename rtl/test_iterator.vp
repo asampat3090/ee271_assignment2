@@ -76,7 +76,7 @@
 //;                            Val=>1, Min=>1, Max=>1, Step=>1, 
 //;                            Doc=>"How many pipe stages are in this block");
 //; my $mod_FSM = parameter(Name=>'ModifiedFSM',
-//;                            Val=>'NO', List=>['YES', 'NO'],
+//;                            Val=>'YES', List=>['YES', 'NO'],
 //;                            Doc=>"Use Modified FSM to eliminate a wait state");
 //;
 //; # Convert a Fixed Point Number to a Floating
@@ -385,7 +385,7 @@ module `mname()`
       endcase // case ( state_R14H )
 
 	//output
-      /*$display("VALID POLY: %d \n"	, validSamp_R14H);
+    /*  $display("VALID POLY: %d \n"	, validSamp_R14H);
       $display("STATE: %d \n"		, state_R14H);
       $display("at right: %d \n"	, at_right_edg_R14H);
       $display("at top: %d \n"		, at_top_edg_R14H);
@@ -480,17 +480,36 @@ module `mname()`
    	at_end_box_R14H =   	
 	(box_R14S[1][1] == sample_R14S[1]) &&
    	(box_R14S[1][0] == sample_R14S[0]);
-  
-   
 	
-	   // if statement to account for new inputs
-	   if (at_end_box_R14H | !validSamp_R14H)
-	   begin
-	   	// equivalent to the ll vertex of poly - same as bbox ll
-		next_sample_R14S[0] = box_R14S[0][0]; 
-		next_sample_R14S[1] = box_R14S[0][1];
-		// next sample is invalid - end of bbox
-		next_validSamp_R14H = 1'b0;
+	// simple case - move to the right
+	next_sample_R14S = next_rt_samp_R14S;
+	// next sample is valid
+	next_validSamp_R14H = 1'b1;
+	//micropolygon info
+   	next_isQuad_R14H    = isQuad_R14H;
+   	next_poly_R14S      = poly_R14S;
+   	next_color_R14U     = color_R14U; 
+   	next_box_R14S       = box_R14S;
+   	next_halt_RnnnnL    = 1'b0;
+	
+
+	
+	 if (at_right_edg_R14H)
+	 begin
+		// move to next sample up
+		next_sample_R14S = next_up_samp_R14S;
+		// next sample is valid
+		next_validSamp_R14H = 1'b1;
+		//micropolygon info
+	   	next_isQuad_R14H    = isQuad_R14H;
+	   	next_poly_R14S      = poly_R14S;
+	   	next_color_R14U     = color_R14U; 
+	   	next_box_R14S       = box_R14S;
+	   	next_halt_RnnnnL    = 1'b0;
+	 end 	
+	 
+	 if(at_end_box_R14H || !validSamp_R14H)
+	 begin
 		// Since we want to intake new values
 	   	// basically do what what WAIT_STATE used to do!
 		
@@ -507,39 +526,17 @@ module `mname()`
 	   	// takes in a new bounding box
 	   	next_box_R14S       = box_R13S;
 	   	// received a new bounding box, so no halt
-	   	next_halt_RnnnnL    = (validPoly_R13H ? 1'b0 : 1'b1); 
-
-	   end
-	   else if (at_right_edg_R14H)
-	   begin
-		// move to next sample up
-		next_sample_R14S = next_up_samp_R14S;
-		// next sample is valid
-		next_validSamp_R14H = 1'b1;
-		// remain in the test state
-		next_state_R14H     = TEST_STATE;
-	   end 	
-	   else
-	   begin
-		// simple case - move to the right
-		next_sample_R14S = next_rt_samp_R14S;
-		// next sample is valid
-		next_validSamp_R14H = 1'b1;
-		// remain in test state
-		next_state_R14H     = TEST_STATE;
-	   end
+	   	next_halt_RnnnnL    = 1'b1;
+	 end
+	
+	 
+	  // if statement to account for new inputs
+	 
 	  
-	   //micropolygon info
-	   next_isQuad_R14H    = isQuad_R14H;
-	   next_poly_R14S      = poly_R14S;
-	   next_color_R14U     = color_R14U; 
-	   next_box_R14S       = box_R14S;
-	   next_halt_RnnnnL    = (at_end_box_R14H ? 1'b1 : 1'b0);
-	end      
+	   
 
 	//output
-      /*$display("VALID POLY: %d \n"	, validSamp_R14H);
-      $display("STATE: %d \n"		, state_R14H);
+    /*  $display("VALID POLY: %d \n"	, validSamp_R14H);
       $display("at right: %d \n"	, at_right_edg_R14H);
       $display("at top: %d \n"		, at_top_edg_R14H);
       $display("at end: %d \n"		, at_end_box_R14H);
@@ -565,6 +562,23 @@ module `mname()`
    //////  RTL code for modified FSM Finishes
    //////
    
+   //Some Error Checking Assertions
+
+   //Define a Less Than Property
+   //  
+   //  a should be less than b
+   property rb_lt( rst, a , b , c );
+      @(posedge clk) rst | ((a<=b) | !c);
+   endproperty
+
+   //Check that Proposed Sample is in BBox
+   assert property( rb_lt( rst, next_sample_R14S[0] , next_box_R14S[1][0] , next_validSamp_R14H ));
+   assert property( rb_lt( rst, next_sample_R14S[1] , next_box_R14S[1][1] , next_validSamp_R14H ));
+   assert property( rb_lt( rst, next_box_R14S[0][0] , next_sample_R14S[0] , next_validSamp_R14H ));
+   assert property( rb_lt( rst, next_box_R14S[0][1] , next_sample_R14S[1] , next_validSamp_R14H ));
+   //Check that Proposed Sample is in BBox
+
+   //Error Checking Assertions
    
    //; }
 

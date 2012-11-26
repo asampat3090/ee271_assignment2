@@ -28,7 +28,6 @@
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 //
 //	From Command Line input (priority=4):
-// Parameter ModifiedFSM 	= NO
 //
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 //
@@ -110,7 +109,7 @@
 //
 // PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 1
 //
-// ModifiedFSM (_GENESIS2_CMD_LINE_PRIORITY_) = NO
+// ModifiedFSM (_GENESIS2_DECLARATION_PRIORITY_) = NO
 //
 
 /* A Note on Signal Names:
@@ -381,7 +380,7 @@ module test_iterator_unq1
       endcase // case ( state_R14H )
 
 	//output
-      /*$display("VALID POLY: %d \n"	, validSamp_R14H);
+    /*  $display("VALID POLY: %d \n"	, validSamp_R14H);
       $display("STATE: %d \n"		, state_R14H);
       $display("at right: %d \n"	, at_right_edg_R14H);
       $display("at top: %d \n"		, at_top_edg_R14H);

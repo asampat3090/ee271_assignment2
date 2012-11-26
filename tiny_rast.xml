@@ -1,24 +1,3 @@
 <HierarchyTop>
   <InstanceName>top_rast</InstanceName>
-  <SubInstances>
-    <SubInstanceItem>
-      <InstanceName>rast</InstanceName>
-      <SubInstances>
-        <SubInstanceItem>
-          <InstanceName>test_iterator</InstanceName>
-          <Parameters>
-            <ParameterItem>
-              <Doc>Use Modified FSM to eliminate a wait state</Doc>
-              <Name>ModifiedFSM</Name>
-              <Range>
-                <List>YES</List>
-                <List>NO</List>
-              </Range>
-              <Val>NO</Val>
-            </ParameterItem>
-          </Parameters>
-        </SubInstanceItem>
-      </SubInstances>
-    </SubInstanceItem>
-  </SubInstances>
 </HierarchyTop>
