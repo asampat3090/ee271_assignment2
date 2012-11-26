@@ -380,12 +380,12 @@ module `mname()`
 	   next_poly_R14S      = poly_R14S;
 	   next_color_R14U     = color_R14U; 
 	   next_box_R14S       = box_R14S;
-	   next_halt_RnnnnL    = 1'b0;
+	   next_halt_RnnnnL    = (at_end_box_R14H ? 1'b1 : 1'b0);
 	end      
       endcase // case ( state_R14H )
 
 	//output
-      $display("VALID POLY: %d \n"	, validPoly_R13H);
+      $display("VALID POLY: %d \n"	, validSamp_R14H);
       $display("STATE: %d \n"		, state_R14H);
       $display("at right: %d \n"	, at_right_edg_R14H);
       $display("at top: %d \n"		, at_top_edg_R14H);

@@ -266,29 +266,7 @@ module `mname()`
    
    // NOTE: ALL CODE SHOULD NOT BE DEPENDENT ON INPUTS - MOORE FSM   
 
-   always_comb begin
-
-      //output
-      $display("VALID POLY: %d \n"	, validPoly_R13H);
-      $display("STATE: %d \n"		, state_R14H);
-      $display("at right: %d \n"	, at_right_edg_R14H);
-      $display("at top: %d \n"		, at_top_edg_R14H);
-      $display("at end: %d \n"		, at_end_box_R14H);
-      // $display("sampleR13 x: %d \n"	, sample_R13S[0]);
-      // $display("sampleR13 y: %d \n"	, sample_R13S[1]);
-      $display("sampleR14 x: %d \n"	, sample_R14S[0]);
-      $display("sampleR14 y: %d \n"	, sample_R14S[1]);
-      $display("boxR13 ll x: %d \n"	, box_R13S[0][0]);
-      $display("boxR13 ll y: %d \n"	, box_R13S[0][1]);
-      $display("boxR13 ur x: %d \n"	, box_R13S[1][0]);
-      $display("boxR13 ur y: %d \n"	, box_R13S[1][1]);
-      $display("boxR14 ll x: %d \n"	, box_R14S[0][0]);
-      $display("boxR14 ll y: %d \n"	, box_R14S[0][1]);
-      $display("boxR14 ur x: %d \n"	, box_R14S[1][0]);
-      $display("boxR14 ur y: %d \n"	, box_R14S[1][1]);
-      $display("interval: %d \n" 	, interval_R14S);
-      $display("subsample: %d \n"       , subSample_RnnnnU);
-      $display("------------- \n");
+   always_comb begin      
   
 	 // Define pixel interval based on subSample_RnnnnU value
 
@@ -405,6 +383,28 @@ module `mname()`
 	   next_halt_RnnnnL    = 1'b0;
 	end      
       endcase // case ( state_R14H )
+
+	//output
+      $display("VALID POLY: %d \n"	, validSamp_R14H);
+      $display("STATE: %d \n"		, state_R14H);
+      $display("at right: %d \n"	, at_right_edg_R14H);
+      $display("at top: %d \n"		, at_top_edg_R14H);
+      $display("at end: %d \n"		, at_end_box_R14H);
+      // $display("sampleR13 x: %d \n"	, sample_R13S[0]);
+      // $display("sampleR13 y: %d \n"	, sample_R13S[1]);
+      $display("sampleR14 x: %d \n"	, sample_R14S[0]);
+      $display("sampleR14 y: %d \n"	, sample_R14S[1]);
+      $display("boxR13 ll x: %d \n"	, box_R13S[0][0]);
+      $display("boxR13 ll y: %d \n"	, box_R13S[0][1]);
+      $display("boxR13 ur x: %d \n"	, box_R13S[1][0]);
+      $display("boxR13 ur y: %d \n"	, box_R13S[1][1]);
+      $display("boxR14 ll x: %d \n"	, box_R14S[0][0]);
+      $display("boxR14 ll y: %d \n"	, box_R14S[0][1]);
+      $display("boxR14 ur x: %d \n"	, box_R14S[1][0]);
+      $display("boxR14 ur y: %d \n"	, box_R14S[1][1]);
+      $display("interval: %d \n" 	, interval_R14S);
+      $display("subsample: %d \n"       , subSample_RnnnnU);
+      $display("------------- \n");
       
    end //always_comb
    
