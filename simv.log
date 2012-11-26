@@ -1,7 +1,7 @@
 Command: /afs/ir.stanford.edu/users/a/s/asampat/EE271/assignment2/simv -l /afs/ir.stanford.edu/users/a/s/asampat/EE271/assignment2/simv.log +vpdbufsize+100 +vpdfileswitchsize+100 +testname=/usr/class/ee271/project//vect//vec_271_01_sv_short.dat
 Chronologic VCS simulator copyright 1991-2011
 Contains Synopsys proprietary information.
-Compiler version F-2011.12_Full64; Runtime version F-2011.12_Full64;  Nov 25 17:18 2012
+Compiler version F-2011.12_Full64; Runtime version F-2011.12_Full64;  Nov 25 18:35 2012
 Message: From $vcdplusmemon at time 0 in file genesis_verif/testbench_unq1.v line 369: [VCD+-SFSL]: 
 Setting file switch size limit to (100) megabytes.
 Message: From $vcdplusmemon at time 0 in file genesis_verif/testbench_unq1.v line 369: [VCD+-SVBS]: 
@@ -13,9 +13,9 @@ Simulation will timout after 50000000 cycles
 Simulation will use test file /usr/class/ee271/project//vect//vec_271_01_sv_short.dat
 Seed=      12345 
 RT Warning: No condition matches in 'unique case' statement.
-        "genesis_synth/test_iterator_unq1.v", line 319, for top_rast.rast.test_iterator, at time     0.
+        "genesis_synth/test_iterator_unq1.v", line 320, for top_rast.rast.test_iterator, at time     0.
 RT Warning: No condition matches in 'unique case' statement.
-        "genesis_synth/test_iterator_unq1.v", line 319, for top_rast.rast.test_iterator, at time     0.
+        "genesis_synth/test_iterator_unq1.v", line 320, for top_rast.rast.test_iterator, at time     0.
 time=     15000 ************** Driver Is Initializing Test from File *****************
 Setting screen params: w=800 h=600 msaa=16
 time=     30000 ************** Initializing FB and ZB *****************
@@ -43,5 +43,5 @@ $finish called from file "genesis_verif/testbench_unq1.v", line 328.
 $finish at simulation time            235423040
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 235423040 ns
-CPU Time:     16.380 seconds;       Data structure size:   0.3Mb
-Sun Nov 25 17:19:04 2012
+CPU Time:     16.350 seconds;       Data structure size:   0.3Mb
+Sun Nov 25 18:35:43 2012

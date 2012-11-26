@@ -78,7 +78,6 @@ SNPSLMD_QUEUE=true
 SNPSLMD_LICENSE_FILE=27000@cadlic0.stanford.edu:/usr/class/ee/synopsys/vcs-mx/F-2011.12/flexlm//license.dat
 SCRNAME=vcs
 SCRIPT_NAME=vcs
-RUN=0
 REMOTEHOST=dn5221dr.sunet
 PYTHONPATH_modshare=/usr/class/ee272/cell_lib//SAED_PDK90nm:999999999:/usr/class/ee/genesis2/r11012/PythonLibs:2
 PYTHONPATH=/usr/class/ee/genesis2/r11012/PythonLibs:/usr/class/ee272/cell_lib//SAED_PDK90nm:/usr/class/ee272/cell_lib//SAED_PDK90nm
@@ -98,7 +97,7 @@ MFLAGS=
 MANPATH_modshare=/usr/local/share/man:1:/usr/man:1:/usr/pubsw/man:1:/usr/class/ee/synopsys/dc_shell/F-2011.09-SP4/doc/snps_tcl/man:2:/usr/class/ee/synopsys/dc_shell/F-2011.09-SP4/doc/syn/man:2:/usr/class/ee/synopsys/vcs-mx/F-2011.12/doc/man:2:/usr/local/man:1:/usr/share/man:1:/usr/class/ee/synopsys/dc_shell/F-2011.09-SP4/doc/snps_gui/man:2
 MAKEOVERRIDES=${-*-command-variables-*-}
 MAKELEVEL=1
-MAKEFLAGS=RUN=+testname=/usr/class/ee271/project//vect//vec_271_01_sv_short.dat
+MAKEFLAGS=GENESIS_PARAMS=top_rast.rast.test_iterator.ModifiedFSM=NO
 LOADEDMODULES_modshare=starrc/F-2011.12-SP2:2:genesis2/latest:2:synopsys_pdk/2011:2:vcs-mx/F-2011.12:2:base/1.0:2:cx/F-2011.09-SP2:2:synopsys_edk/2011:2:cdesigner/F-2011.09-SP2:2:dc_shell/F-2011.09-SP4:2
 LOADEDMODULES=base/1.0:genesis2/latest:vcs-mx/F-2011.12:dc_shell/F-2011.09-SP4:synopsys_edk/2011:cdesigner/F-2011.09-SP2:starrc/F-2011.12-SP2:cx/F-2011.09-SP2:synopsys_pdk/2011
 LM_LICENSE_FILE_modshare=27000@cadlic0.stanford.edu:4
@@ -110,6 +109,7 @@ HOSTNAME=corn25.stanford.edu
 HOST=corn25.stanford.edu
 HAVE_DESCR_LIMIT=
 GROUP=operator
+GENESIS_PARAMS=top_rast.rast.test_iterator.ModifiedFSM=NO
 GENESIS_LIBS=/usr/class/ee/genesis2/r11012/PerlLibs
 GENESIS_HOME=/usr/class/ee/genesis2/r11012
 EE271_VECT=/usr/class/ee271/project//vect/
@@ -122,59 +122,59 @@ CADENCE_LICENSE=5280@cadlic0.stanford.edu
 0
 51
 1328923868 /usr/class/ee/synopsys/dc_shell/F-2011.09-SP4/dw/sim_ver/DW_pl_reg.v
-1353892724 genesis_verif/top_rast.v
-1353892724 genesis_verif/testbench_unq1.v
-1353892724 genesis_verif/perf_monitor_unq1.v
-1353892723 genesis_verif/smpl_cnt_sb_unq1.v
-1353892723 genesis_verif/dff_unq16.v
-1353892723 genesis_verif/dff2_unq10.v
-1353892723 genesis_verif/dff_unq15.v
-1353892723 genesis_verif/smpl_sb_unq1.v
-1353892723 genesis_verif/dff_unq14.v
-1353892723 genesis_verif/dff2_unq9.v
-1353892723 genesis_verif/dff3_unq7.v
-1353892723 genesis_verif/dff2_unq8.v
-1353892723 genesis_verif/dff_unq13.v
-1353892723 genesis_verif/bbx_sb_unq1.v
-1353892723 genesis_verif/dff_unq12.v
-1353892723 genesis_verif/dff_unq11.v
-1353892723 genesis_verif/dff3_unq6.v
-1353892723 genesis_verif/dff2_unq7.v
-1353892723 genesis_verif/dff_unq10.v
-1353892723 genesis_verif/zbuff_unq1.v
-1353892723 genesis_verif/rast_driver_unq1.v
-1353892723 genesis_verif/clocker_unq1.v
-1353892723 genesis_synth/rast.v
-1353892723 genesis_synth/sampletest_unq1.v
-1353892723 genesis_synth/dff_unq9.v
-1353892722 genesis_synth/hash_jtree_unq1.v
-1353892722 genesis_synth/dff_unq8.v
-1353892722 genesis_synth/dff2_unq6.v
-1353892722 genesis_synth/dff3_unq5.v
-1353892722 genesis_synth/dff2_unq5.v
-1353892722 genesis_synth/dff_unq7.v
-1353892722 genesis_synth/tree_hash_unq1.v
-1353892722 genesis_synth/test_iterator_unq1.v
-1353892722 genesis_synth/dff_unq6.v
-1353892722 genesis_synth/dff_unq5.v
-1353892722 genesis_synth/bbox_unq1.v
-1353892722 genesis_synth/dff_unq4.v
-1353892722 genesis_synth/dff3_unq4.v
-1353892722 genesis_synth/dff2_unq4.v
-1353892722 genesis_synth/dff3_unq3.v
-1353892722 genesis_synth/dff2_unq3.v
-1353892722 genesis_synth/dff_unq3.v
-1353892722 genesis_synth/dff_unq2.v
-1353892722 genesis_synth/dff3_unq2.v
-1353892722 genesis_synth/dff2_unq2.v
-1353892722 genesis_synth/dff3_unq1.v
-1353892722 genesis_synth/dff2_unq1.v
-1353892722 genesis_synth/dff_unq1.v
-1353892724 genesis_vlog.vf
+1353897212 genesis_verif/top_rast.v
+1353897212 genesis_verif/testbench_unq1.v
+1353897212 genesis_verif/perf_monitor_unq1.v
+1353897211 genesis_verif/smpl_cnt_sb_unq1.v
+1353897211 genesis_verif/dff_unq16.v
+1353897211 genesis_verif/dff2_unq10.v
+1353897211 genesis_verif/dff_unq15.v
+1353897211 genesis_verif/smpl_sb_unq1.v
+1353897211 genesis_verif/dff_unq14.v
+1353897211 genesis_verif/dff2_unq9.v
+1353897211 genesis_verif/dff3_unq7.v
+1353897211 genesis_verif/dff2_unq8.v
+1353897211 genesis_verif/dff_unq13.v
+1353897211 genesis_verif/bbx_sb_unq1.v
+1353897211 genesis_verif/dff_unq12.v
+1353897211 genesis_verif/dff_unq11.v
+1353897211 genesis_verif/dff3_unq6.v
+1353897211 genesis_verif/dff2_unq7.v
+1353897211 genesis_verif/dff_unq10.v
+1353897211 genesis_verif/zbuff_unq1.v
+1353897211 genesis_verif/rast_driver_unq1.v
+1353897211 genesis_verif/clocker_unq1.v
+1353897211 genesis_synth/rast.v
+1353897211 genesis_synth/sampletest_unq1.v
+1353897211 genesis_synth/dff_unq9.v
+1353897211 genesis_synth/hash_jtree_unq1.v
+1353897210 genesis_synth/dff_unq8.v
+1353897210 genesis_synth/dff2_unq6.v
+1353897210 genesis_synth/dff3_unq5.v
+1353897207 genesis_synth/dff2_unq5.v
+1353897206 genesis_synth/dff_unq7.v
+1353897206 genesis_synth/tree_hash_unq1.v
+1353897206 genesis_synth/test_iterator_unq1.v
+1353897206 genesis_synth/dff_unq6.v
+1353897201 genesis_synth/dff_unq5.v
+1353897193 genesis_synth/bbox_unq1.v
+1353897193 genesis_synth/dff_unq4.v
+1353897193 genesis_synth/dff3_unq4.v
+1353897192 genesis_synth/dff2_unq4.v
+1353897187 genesis_synth/dff3_unq3.v
+1353897181 genesis_synth/dff2_unq3.v
+1353897180 genesis_synth/dff_unq3.v
+1353897180 genesis_synth/dff_unq2.v
+1353897180 genesis_synth/dff3_unq2.v
+1353897179 genesis_synth/dff2_unq2.v
+1353897174 genesis_synth/dff3_unq1.v
+1353897170 genesis_synth/dff2_unq1.v
+1353897170 genesis_synth/dff_unq1.v
+1353897212 genesis_vlog.vf
 1322023114 /usr/class/ee/synopsys/vcs-mx/F-2011.12/amd64/lib/vcsdp.tab
 4
-1353838069 /afs/ir.stanford.edu/users/a/s/asampat/EE271/assignment2/gold/rastBBox_fix_sv.o
+1353897212 /afs/ir.stanford.edu/users/a/s/asampat/EE271/assignment2/gold/rastBBox_fix_sv.o
 1322023672 /usr/class/ee/synopsys/vcs-mx/F-2011.12/amd64/lib/libvirsim.so
 1322023397 /usr/class/ee/synopsys/vcs-mx/F-2011.12/amd64/lib/liberrorinf.so
 1322023255 /usr/class/ee/synopsys/vcs-mx/F-2011.12/amd64/lib/libsnpsmalloc.so
-1353892727 simv.daidir
+1353897216 simv.daidir

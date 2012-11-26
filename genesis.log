@@ -8,6 +8,7 @@ Genesis2::Manager->print_cmdline: Your Complete Genesis2 Command Line:
     -product genesis_vlog.vf                                                                        \
     -hierarchy rast.xml                                                                             \
     -xml empty.xml                                                                                  \
+    -parameter top_rast.rast.test_iterator.ModifiedFSM=NO                                           \
     -parse                                                                                          \
     -srcpath ./                                                                                     \
     -srcpath /afs/ir.stanford.edu/users/a/s/asampat/EE271/assignment2/rtl                           \
@@ -85,6 +86,7 @@ Genesis2::Manager->execute: Done With Source File Parsing Phase
 Genesis2::Manager->execute: Starting Verilog Code Generation Phase
 Genesis2::ConfigHandler->ReadXml: Now reading XML config file: empty.xml
 Genesis2::ConfigHandler->SetPrmOverrides: Now processing command line parameter overrides
+	INFO:	Command line parameter override: path=top_rast.rast.test_iterator, param name=ModifiedFSM, override val='NO'
 Genesis2::Manager->gen_verilog: Starting code generation from module top_rast
 Genesis2::Manager->execute: Done With Verilog Code Generation Phase
 

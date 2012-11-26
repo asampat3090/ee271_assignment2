@@ -444,7 +444,8 @@ module `mname()`
 
    always_comb begin      
   
-        // Define pixel interval based on subSample_RnnnnU value
+	 // Define pixel interval based on subSample_RnnnnU value
+
 	 interval_R14S = {`$sig_fig`{1'b0}};    	 
    	 case (subSample_RnnnnU)
    	      4'b1000: interval_R14S[`$radix`]=1'b1;
@@ -454,69 +455,59 @@ module `mname()`
 	      default: interval_R14S[`$radix`]= 1'b1;
    	 endcase
    	
-   	//helper signals
-   	next_up_samp_R14S[0] = box_R14S[0][0];   	
-	next_up_samp_R14S[1] = sample_R14S[1]+interval_R14S;   	
+   	// Define the helper signals
+
+   	// if at right edge go to next row up and furthest left
+   	// set the ll x value as x
+   	next_up_samp_R14S[0] = box_R14S[0][0];
+   	// set y as current sample y + 1 unit 
+	next_up_samp_R14S[1] = sample_R14S[1]+interval_R14S;
+
+   	// going to next point if not at edge
+   	// set x as current sample x +1 pos
    	next_rt_samp_R14S[0] = sample_R14S[0]+interval_R14S;
+   	// set y as same as current sample
    	next_rt_samp_R14S[1] = sample_R14S[1];
 
-   	at_right_edg_R14H = (box_R14S[1][0] == sample_R14S[0]);      	
+   	// Assume bounding box is calibrated to the grid
+   	// compare the x value of the ur of box and the current sample point
+   	at_right_edg_R14H = (box_R14S[1][0] == sample_R14S[0]);   
+
+   	// compare y val of ur of box and current sample point
    	at_top_edg_R14H = (box_R14S[1][1] == sample_R14S[1]);
+
+   	// compare x and y val of ur bbox and sample point
    	at_end_box_R14H =   	
 	(box_R14S[1][1] == sample_R14S[1]) &&
-   	(box_R14S[1][0] == sample_R14S[0]);   
-
-   ////// ST8 Masheen	
+   	(box_R14S[1][0] == sample_R14S[0]);
+  
    
-      unique case( state_R14H )
-
-        ( WAIT_STATE ): begin
-	   // the first sample is equivalent to the ll of bbox
-	   next_sample_R14S[0] = box_R13S[0][0]; 
-	   next_sample_R14S[1] = box_R13S[0][1];
-	   // the first sample at ll of bbox should be valid
-	   next_validSamp_R14H = validPoly_R13H;
-	   next_isQuad_R14H    = isQuad_R13H;
-	   // if a new valid micropolygon is at input, move to TEST_STATE	   
-	   next_state_R14H     = (validPoly_R13H ? TEST_STATE : WAIT_STATE);
-	   // takes in a new polygon for testing
-	   next_poly_R14S      = poly_R13S;
-	   // takes in new color info for incoming poly
-	   next_color_R14U     = color_R13U;
-	   // takes in a new bounding box
-	   next_box_R14S       = box_R13S;
-	   // received a new bounding box, so no halt
-	   next_halt_RnnnnL    = (validPoly_R13H ? 1'b0 : 1'b1); 
-	end
-
-	( TEST_STATE ): begin
-	  // set to the next sample to test
-	   if (at_end_box_R14H)
+	
+	   // if statement to account for new inputs
+	   if (at_end_box_R14H | !validSamp_R14H)
 	   begin
-
-		if(validPoly_R13H == 1'b1) //another poly is immediately available
-		begin
-			//initialize values
-			next_sample_R14S[0] = box_R13S[0][0];
-			next_sample_R14S[1] = box_R13S[0][1];
-			next_validSamp_R14H = 1'b1;
-			next_isQuad_R14H = isQuad_R13H;
-			next_state_R14H = TEST_STATE;
-			next_poly_R14S = poly_R13S;
-			next_color_R14U = color_R13U;
-			next_box_R14S = box_R13S;			
-			
-		end
-		else //no poly available - wait
-		begin
-		   	// equivalent to the ll vertex of poly - same as bbox ll
-			next_sample_R14S[0] = box_R14S[0][0]; 
-			next_sample_R14S[1] = box_R14S[0][1];
-			// next sample is invalid - end of bbox
-			next_validSamp_R14H = 1'b0;
-			// waiting for a new bbox and poly
-			next_state_R14H     = WAIT_STATE;
-		end
+	   	// equivalent to the ll vertex of poly - same as bbox ll
+		next_sample_R14S[0] = box_R14S[0][0]; 
+		next_sample_R14S[1] = box_R14S[0][1];
+		// next sample is invalid - end of bbox
+		next_validSamp_R14H = 1'b0;
+		// Since we want to intake new values
+	   	// basically do what what WAIT_STATE used to do!
+		
+		// the first sample is equivalent to the ll of bbox
+	   	next_sample_R14S[0] = box_R13S[0][0]; 
+	   	next_sample_R14S[1] = box_R13S[0][1];
+	   	// the first sample at ll of bbox should be valid
+	   	next_validSamp_R14H = validPoly_R13H;
+	   	next_isQuad_R14H    = isQuad_R13H;
+	   	// takes in a new polygon for testing
+	   	next_poly_R14S      = poly_R13S;
+	   	// takes in new color info for incoming poly
+	   	next_color_R14U     = color_R13U;
+	   	// takes in a new bounding box
+	   	next_box_R14S       = box_R13S;
+	   	// received a new bounding box, so no halt
+	   	next_halt_RnnnnL    = (validPoly_R13H ? 1'b0 : 1'b1); 
 
 	   end
 	   else if (at_right_edg_R14H)
@@ -545,10 +536,9 @@ module `mname()`
 	   next_box_R14S       = box_R14S;
 	   next_halt_RnnnnL    = (at_end_box_R14H ? 1'b1 : 1'b0);
 	end      
-      endcase // case ( state_R14H )
 
 	//output
-      $display("VALID POLY: %d \n"	, validSamp_R14H);
+      /*$display("VALID POLY: %d \n"	, validSamp_R14H);
       $display("STATE: %d \n"		, state_R14H);
       $display("at right: %d \n"	, at_right_edg_R14H);
       $display("at top: %d \n"		, at_top_edg_R14H);
@@ -568,7 +558,7 @@ module `mname()`
       $display("interval: %d \n" 	, interval_R14S);
       $display("subsample: %d \n"       , subSample_RnnnnU);
       $display("------------- \n");
-      
+      */
    end //always_comb
    
    //////
