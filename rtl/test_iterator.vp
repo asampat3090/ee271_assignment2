@@ -198,11 +198,8 @@ module `mname()`
 			   .in({next_validSamp_R14H, next_isQuad_R14H, next_halt_RnnnnL}) , 
 			   .clk(clk) , .reset(rst), .en(1'b1),
 			   .out({validSamp_R14H, isQuad_R14H, halt_RnnnnL}));
-   // Instantiate registers for storing these states
+   // Instantiate registers for storing these states   
    
-
-   
-   //; if ($mod_FSM eq 'NO') {
    
    //////
    //////  RTL code for original FSM Goes Here
@@ -260,7 +257,10 @@ module `mname()`
    // check the comments 'A Note on Signal Names' 
    // at the begining of the module for the help on
    // understanding the signals here
-   
+  
+   //; if ($mod_FSM eq 'NO') {
+
+ 
    ////// PLACE YOUR CODE HERE
   
    
@@ -432,9 +432,6 @@ module `mname()`
 
    //Error Checking Assertions
 
-
-
-
    
    //; } else { # use Modified FSM
    
@@ -442,19 +439,137 @@ module `mname()`
    //////  RTL code for modified FSM Goes Here
    //////
    
-   ////// PLACE YOUR CODE HERE 
+   ////// PLACE YOUR CODE HERE MODIFIEDYEEEAAAAHH
+
+   always_comb begin      
+  
+        // Define pixel interval based on subSample_RnnnnU value
+	 interval_R14S = {`$sig_fig`{1'b0}};    	 
+   	 case (subSample_RnnnnU)
+   	      4'b1000: interval_R14S[`$radix`]=1'b1;
+	      4'b0100: interval_R14S[`$radix`-1]=1'b1;
+	      4'b0010: interval_R14S[`$radix`-2]=1'b1;
+	      4'b0001: interval_R14S[`$radix`-3]=1'b1;
+	      default: interval_R14S[`$radix`]= 1'b1;
+   	 endcase
+   	
+   	//helper signals
+   	next_up_samp_R14S[0] = box_R14S[0][0];   	
+	next_up_samp_R14S[1] = sample_R14S[1]+interval_R14S;   	
+   	next_rt_samp_R14S[0] = sample_R14S[0]+interval_R14S;
+   	next_rt_samp_R14S[1] = sample_R14S[1];
+
+   	at_right_edg_R14H = (box_R14S[1][0] == sample_R14S[0]);      	
+   	at_top_edg_R14H = (box_R14S[1][1] == sample_R14S[1]);
+   	at_end_box_R14H =   	
+	(box_R14S[1][1] == sample_R14S[1]) &&
+   	(box_R14S[1][0] == sample_R14S[0]);   
+
+   ////// ST8 Masheen	
    
+      unique case( state_R14H )
 
-   
+        ( WAIT_STATE ): begin
+	   // the first sample is equivalent to the ll of bbox
+	   next_sample_R14S[0] = box_R13S[0][0]; 
+	   next_sample_R14S[1] = box_R13S[0][1];
+	   // the first sample at ll of bbox should be valid
+	   next_validSamp_R14H = validPoly_R13H;
+	   next_isQuad_R14H    = isQuad_R13H;
+	   // if a new valid micropolygon is at input, move to TEST_STATE	   
+	   next_state_R14H     = (validPoly_R13H ? TEST_STATE : WAIT_STATE);
+	   // takes in a new polygon for testing
+	   next_poly_R14S      = poly_R13S;
+	   // takes in new color info for incoming poly
+	   next_color_R14U     = color_R13U;
+	   // takes in a new bounding box
+	   next_box_R14S       = box_R13S;
+	   // received a new bounding box, so no halt
+	   next_halt_RnnnnL    = (validPoly_R13H ? 1'b0 : 1'b1); 
+	end
 
+	( TEST_STATE ): begin
+	  // set to the next sample to test
+	   if (at_end_box_R14H)
+	   begin
 
+		if(validPoly_R13H == 1'b1) //another poly is immediately available
+		begin
+			//initialize values
+			next_sample_R14S[0] = box_R13S[0][0];
+			next_sample_R14S[1] = box_R13S[0][1];
+			next_validSamp_R14H = 1'b1;
+			next_isQuad_R14H = isQuad_R13H;
+			next_state_R14H = TEST_STATE;
+			next_poly_R14S = poly_R13S;
+			next_color_R14U = color_R13U;
+			next_box_R14S = box_R13S;
+			next_halt_RnnnnL = 1'b0;
+			
+		end
+		else //no poly available - wait
+		begin
+		   	// equivalent to the ll vertex of poly - same as bbox ll
+			next_sample_R14S[0] = box_R14S[0][0]; 
+			next_sample_R14S[1] = box_R14S[0][1];
+			// next sample is invalid - end of bbox
+			next_validSamp_R14H = 1'b0;
+			// waiting for a new bbox and poly
+			next_state_R14H     = WAIT_STATE;
+		end
 
+	   end
+	   else if (at_right_edg_R14H)
+	   begin
+		// move to next sample up
+		next_sample_R14S = next_up_samp_R14S;
+		// next sample is valid
+		next_validSamp_R14H = 1'b1;
+		// remain in the test state
+		next_state_R14H     = TEST_STATE;
+	   end 	
+	   else
+	   begin
+		// simple case - move to the right
+		next_sample_R14S = next_rt_samp_R14S;
+		// next sample is valid
+		next_validSamp_R14H = 1'b1;
+		// remain in test state
+		next_state_R14H     = TEST_STATE;
+	   end
+	  
+	   //micropolygon info
+	   next_isQuad_R14H    = isQuad_R14H;
+	   next_poly_R14S      = poly_R14S;
+	   next_color_R14U     = color_R14U; 
+	   next_box_R14S       = box_R14S;
+	   next_halt_RnnnnL    = (at_end_box_R14H ? 1'b1 : 1'b0);
+	end      
+      endcase // case ( state_R14H )
 
-
-
-   
-
-
+	//output
+      $display("VALID POLY: %d \n"	, validSamp_R14H);
+      $display("STATE: %d \n"		, state_R14H);
+      $display("at right: %d \n"	, at_right_edg_R14H);
+      $display("at top: %d \n"		, at_top_edg_R14H);
+      $display("at end: %d \n"		, at_end_box_R14H);
+      // $display("sampleR13 x: %d \n"	, sample_R13S[0]);
+      // $display("sampleR13 y: %d \n"	, sample_R13S[1]);
+      $display("sampleR14 x: %d \n"	, sample_R14S[0]);
+      $display("sampleR14 y: %d \n"	, sample_R14S[1]);
+      $display("boxR13 ll x: %d \n"	, box_R13S[0][0]);
+      $display("boxR13 ll y: %d \n"	, box_R13S[0][1]);
+      $display("boxR13 ur x: %d \n"	, box_R13S[1][0]);
+      $display("boxR13 ur y: %d \n"	, box_R13S[1][1]);
+      $display("boxR14 ll x: %d \n"	, box_R14S[0][0]);
+      $display("boxR14 ll y: %d \n"	, box_R14S[0][1]);
+      $display("boxR14 ur x: %d \n"	, box_R14S[1][0]);
+      $display("boxR14 ur y: %d \n"	, box_R14S[1][1]);
+      $display("interval: %d \n" 	, interval_R14S);
+      $display("subsample: %d \n"       , subSample_RnnnnU);
+      $display("------------- \n");
+      
+   end //always_comb
    
    //////
    //////  RTL code for modified FSM Finishes
