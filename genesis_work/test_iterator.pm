@@ -107,7 +107,7 @@ print { $self->{OutfileHandle} } ' * *******************************************
                             Val=>1, Min=>1, Max=>1, Step=>1, 
                             Doc=>"How many pipe stages are in this block");
  my $mod_FSM = parameter(Name=>'ModifiedFSM',
-                            Val=>'NO', List=>['YES', 'NO'],
+                            Val=>'YES', List=>['YES', 'NO'],
                             Doc=>"Use Modified FSM to eliminate a wait state");
 
  # Convert a Fixed Point Number to a Floating
@@ -195,7 +195,7 @@ print { $self->{OutfileHandle} } '   // Instantiate registers for storing these 
                            ArraySize1=>$verts,
                            ArraySize2=>$axis,
                            PipelineDepth=>1,
-                           Retime=>'NO' );
+                           Retime=>'YES' );
 print { $self->{OutfileHandle} } '   '; print { $self->{OutfileHandle} } $d301->instantiate(); print { $self->{OutfileHandle} } '(';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			  .in(next_poly_R14S) , ';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			  .clk(clk) , .reset(rst), .en(1\'b1),';print { $self->{OutfileHandle} } "\n"; 
@@ -205,7 +205,7 @@ print { $self->{OutfileHandle} } '   ';print { $self->{OutfileHandle} } "\n";
                            BitWidth=>$sig_fig,
                            ArraySize1=>$colors,
                            PipelineDepth=>1,
-                           Retime=>'NO' );
+                           Retime=>'YES' );
 print { $self->{OutfileHandle} } '   '; print { $self->{OutfileHandle} } $d302->instantiate(); print { $self->{OutfileHandle} } ' (';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			   .in(next_color_R14U) , ';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			   .clk(clk) , .reset(rst), .en(1\'b1),';print { $self->{OutfileHandle} } "\n"; 
@@ -215,7 +215,7 @@ print { $self->{OutfileHandle} } '   ';print { $self->{OutfileHandle} } "\n";
                            BitWidth=>$sig_fig,
                            ArraySize1=>2,
                            PipelineDepth=>1,
-                           Retime=>'NO' );
+                           Retime=>'YES' );
 print { $self->{OutfileHandle} } '   '; print { $self->{OutfileHandle} } $d303->instantiate(); print { $self->{OutfileHandle} } ' (';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			   .in(next_sample_R14S) , ';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			   .clk(clk) , .reset(rst), .en(1\'b1),';print { $self->{OutfileHandle} } "\n"; 
@@ -224,7 +224,7 @@ print { $self->{OutfileHandle} } '   ';print { $self->{OutfileHandle} } "\n";
     my $d304 = generate( 'dff', "d304", 
                            BitWidth=>3,
                            PipelineDepth=>1,
-                           Retime=>'NO' );
+                           Retime=>'YES' );
 print { $self->{OutfileHandle} } '   '; print { $self->{OutfileHandle} } $d304->instantiate(); print { $self->{OutfileHandle} } ' (';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			   .in({next_validSamp_R14H, next_isQuad_R14H, next_halt_RnnnnL}) , ';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } '			   .clk(clk) , .reset(rst), .en(1\'b1),';print { $self->{OutfileHandle} } "\n"; 

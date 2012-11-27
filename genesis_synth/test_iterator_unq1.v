@@ -109,7 +109,7 @@
 //
 // PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 1
 //
-// ModifiedFSM (_GENESIS2_DECLARATION_PRIORITY_) = NO
+// ModifiedFSM (_GENESIS2_DECLARATION_PRIORITY_) = YES
 //
 
 /* A Note on Signal Names:
@@ -185,17 +185,17 @@ module test_iterator_unq1
    
    
    // Instantiate registers for storing these states
-   dff3_unq3  d301(
+   dff3_unq1  d301(
 			  .in(next_poly_R14S) , 
 			  .clk(clk) , .reset(rst), .en(1'b1),
 			  .out(poly_R14S));
    
-   dff2_unq3  d302 (
+   dff2_unq1  d302 (
 			   .in(next_color_R14U) , 
 			   .clk(clk) , .reset(rst), .en(1'b1),
 			   .out(color_R14U));
    
-   dff2_unq4  d303 (
+   dff2_unq2  d303 (
 			   .in(next_sample_R14S) , 
 			   .clk(clk) , .reset(rst), .en(1'b1),
 			   .out(sample_R14S));				 
@@ -254,12 +254,13 @@ module test_iterator_unq1
    // at the begining of the module for the help on
    // understanding the signals here
   
-
- 
-   ////// PLACE YOUR CODE HERE
-  
    
-   // NOTE: ALL CODE SHOULD NOT BE DEPENDENT ON INPUTS - MOORE FSM   
+   //////
+   //////  RTL code for modified FSM Goes Here
+   //////
+   
+
+   ////// PLACE YOUR CODE HERE MODIFIEDYEEEAAAAHH
 
    always_comb begin      
   
@@ -299,89 +300,63 @@ module test_iterator_unq1
    	at_end_box_R14H =   	
 	(box_R14S[1][1] == sample_R14S[1]) &&
    	(box_R14S[1][0] == sample_R14S[0]);
-   //end //always_comb
-   
-
-   // Start the FSM in the WAIT_STATE
-   // assign start_R14H = WAIT_STATE;
-
-   // End Added Code - Anand
-
-   
-   //////
-   ////// Then complete the following combinational logic defining the
-   ////// next states
-   //////
-
-   ////// COMPLETE THE FOLLOW ALWAYS_COMB BLOCK
 	
-   
-      unique case( state_R14H )
+	// simple case - move to the right
+	next_sample_R14S = next_rt_samp_R14S;
+	// next sample is valid
+	next_validSamp_R14H = 1'b1;
+	//micropolygon info
+   	next_isQuad_R14H    = isQuad_R14H;
+   	next_poly_R14S      = poly_R14S;
+   	next_color_R14U     = color_R14U; 
+   	next_box_R14S       = box_R14S;
+   	next_halt_RnnnnL    = 1'b0;
+	
 
-        ( WAIT_STATE ): begin
-	   // the first sample is equivalent to the ll of bbox
-	   next_sample_R14S[0] = box_R13S[0][0]; 
-	   next_sample_R14S[1] = box_R13S[0][1];
-	   // the first sample at ll of bbox should be valid
-	   next_validSamp_R14H = validPoly_R13H;
-	   next_isQuad_R14H    = isQuad_R13H;
-	   // if a new valid micropolygon is at input, move to TEST_STATE
-	   // else stay in WAIT_STATE - EXCEPTION TO MOORE FSM??
-	   next_state_R14H     = (validPoly_R13H ? TEST_STATE : WAIT_STATE);
-	   // takes in a new polygon for testing
-	   next_poly_R14S      = poly_R13S;
-	   // takes in new color info for incoming poly
-	   next_color_R14U     = color_R13U;
-	   // takes in a new bounding box
-	   next_box_R14S       = box_R13S;
-	   // received a new bounding box, so no halt
-	   next_halt_RnnnnL    = (validPoly_R13H ? 1'b0 : 1'b1); 
-	end
-
-	( TEST_STATE ): begin
-	  // set to the next sample to test
-
-	   if (at_end_box_R14H)
-	   begin
-	   	// equivalent to the ll vertex of poly - same as bbox ll
-		next_sample_R14S[0] = box_R14S[0][0]; 
-		next_sample_R14S[1] = box_R14S[0][1];
-		// next sample is invalid - end of bbox
-		next_validSamp_R14H = 1'b0;
-		// waiting for a new bbox and poly
-		next_state_R14H     = WAIT_STATE;
-	   end
-	   else if (at_right_edg_R14H)
-	   begin
+	
+	 if (at_right_edg_R14H)
+	 begin
 		// move to next sample up
 		next_sample_R14S = next_up_samp_R14S;
 		// next sample is valid
 		next_validSamp_R14H = 1'b1;
-		// remain in the test state
-		next_state_R14H     = TEST_STATE;
-	   end 	
-	   else
-	   begin
-		// simple case - move to the right
-		next_sample_R14S = next_rt_samp_R14S;
-		// next sample is valid
-		next_validSamp_R14H = 1'b1;
-		// remain in test state
-		next_state_R14H     = TEST_STATE;
-	   end
+		//micropolygon info
+	   	next_isQuad_R14H    = isQuad_R14H;
+	   	next_poly_R14S      = poly_R14S;
+	   	next_color_R14U     = color_R14U; 
+	   	next_box_R14S       = box_R14S;
+	   	next_halt_RnnnnL    = 1'b0;
+	 end 	
+	 
+	 if(at_end_box_R14H || !validSamp_R14H)
+	 begin
+		// Since we want to intake new values
+	   	// basically do what what WAIT_STATE used to do!
+		
+		// the first sample is equivalent to the ll of bbox
+	   	next_sample_R14S[0] = box_R13S[0][0]; 
+	   	next_sample_R14S[1] = box_R13S[0][1];
+	   	// the first sample at ll of bbox should be valid
+	   	next_validSamp_R14H = validPoly_R13H;
+	   	next_isQuad_R14H    = isQuad_R13H;
+	   	// takes in a new polygon for testing
+	   	next_poly_R14S      = poly_R13S;
+	   	// takes in new color info for incoming poly
+	   	next_color_R14U     = color_R13U;
+	   	// takes in a new bounding box
+	   	next_box_R14S       = box_R13S;
+	   	// received a new bounding box, so no halt
+	   	next_halt_RnnnnL    = 1'b1;
+	 end
+	
+	 
+	  // if statement to account for new inputs
+	 
 	  
-	   //micropolygon info
-	   next_isQuad_R14H    = isQuad_R14H;
-	   next_poly_R14S      = poly_R14S;
-	   next_color_R14U     = color_R14U; 
-	   next_box_R14S       = box_R14S;
-	   next_halt_RnnnnL    = (at_end_box_R14H ? 1'b1 : 1'b0);
-	end      
-      endcase // case ( state_R14H )
+	   
 
 	//output
     /*  $display("VALID POLY: %d \n"	, validSamp_R14H);
-      $display("STATE: %d \n"		, state_R14H);
       $display("at right: %d \n"	, at_right_edg_R14H);
       $display("at top: %d \n"		, at_top_edg_R14H);
       $display("at end: %d \n"		, at_end_box_R14H);
@@ -403,12 +378,10 @@ module test_iterator_unq1
       */
    end //always_comb
    
+   //////
+   //////  RTL code for modified FSM Finishes
+   //////
    
-   //////
-   //////  RTL code for original FSM Finishes
-   //////
-
-
    //Some Error Checking Assertions
 
    //Define a Less Than Property
@@ -426,7 +399,6 @@ module test_iterator_unq1
    //Check that Proposed Sample is in BBox
 
    //Error Checking Assertions
-
    
 
 

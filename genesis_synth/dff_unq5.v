@@ -19,7 +19,7 @@
 //
 //	From 'generate' statement (priority=5):
 // Parameter BitWidth 	= 3
-// Parameter Retime 	= NO
+// Parameter Retime 	= YES
 // Parameter PipelineDepth 	= 1
 //
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
@@ -55,7 +55,7 @@
 //
 // PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 1
 //
-// Retime (_GENESIS2_INHERITANCE_PRIORITY_) = NO
+// Retime (_GENESIS2_INHERITANCE_PRIORITY_) = YES
 //
 
 module dff_unq5 (
@@ -68,8 +68,8 @@ module dff_unq5 (
    /* synopsys dc_tcl_script_begin
     set_ungroup [current_design] true
     set_flatten true -effort high -phase true -design [current_design]
-    set_dont_retime [current_design] true
-    set_optimize_registers false -design [current_design]
+    set_dont_retime [current_design] false 
+    set_optimize_registers true -design [current_design]
     */
    
    //   DW03_pipe_reg #(1,3) dff ( .A(in) , .clk(clk) , .B(out) ) ;

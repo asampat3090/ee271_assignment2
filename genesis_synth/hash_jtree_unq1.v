@@ -23,7 +23,7 @@
 // Parameter Axis 	= 3
 // Parameter SigFig 	= 24
 // Parameter Colors 	= 3
-// Parameter PipelineDepth 	= 2
+// Parameter PipelineDepth 	= 3
 //
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 //
@@ -92,7 +92,7 @@
 //
 // Colors (_GENESIS2_INHERITANCE_PRIORITY_) = 3
 //
-// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 2
+// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 3
 //
  
 /* A Note on Signal Names:

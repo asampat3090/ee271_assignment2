@@ -164,7 +164,7 @@ module `mname()`
    //;                        ArraySize1=>$verts,
    //;                        ArraySize2=>$axis,
    //;                        PipelineDepth=>1,
-   //;                        Retime=>'NO' );
+   //;                        Retime=>'YES' );
    `$d301->instantiate()`(
 			  .in(next_poly_R14S) , 
 			  .clk(clk) , .reset(rst), .en(1'b1),
@@ -174,7 +174,7 @@ module `mname()`
    //;                        BitWidth=>$sig_fig,
    //;                        ArraySize1=>$colors,
    //;                        PipelineDepth=>1,
-   //;                        Retime=>'NO' );
+   //;                        Retime=>'YES' );
    `$d302->instantiate()` (
 			   .in(next_color_R14U) , 
 			   .clk(clk) , .reset(rst), .en(1'b1),
@@ -184,7 +184,7 @@ module `mname()`
    //;                        BitWidth=>$sig_fig,
    //;                        ArraySize1=>2,
    //;                        PipelineDepth=>1,
-   //;                        Retime=>'NO' );
+   //;                        Retime=>'YES' );
    `$d303->instantiate()` (
 			   .in(next_sample_R14S) , 
 			   .clk(clk) , .reset(rst), .en(1'b1),
@@ -193,7 +193,7 @@ module `mname()`
    //; my $d304 = generate( 'dff', "d304", 
    //;                        BitWidth=>3,
    //;                        PipelineDepth=>1,
-   //;                        Retime=>'NO' );
+   //;                        Retime=>'YES' );
    `$d304->instantiate()` (
 			   .in({next_validSamp_R14H, next_isQuad_R14H, next_halt_RnnnnL}) , 
 			   .clk(clk) , .reset(rst), .en(1'b1),

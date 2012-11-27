@@ -23,7 +23,7 @@
 // Parameter Axis 	= 3
 // Parameter SigFig 	= 24
 // Parameter Colors 	= 3
-// Parameter PipelineDepth 	= 2
+// Parameter PipelineDepth 	= 5
 //
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 //
@@ -103,7 +103,7 @@
 //
 // Colors (_GENESIS2_INHERITANCE_PRIORITY_) = 3
 //
-// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 2
+// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 5
 //
 
 
@@ -229,17 +229,17 @@ module  sampletest_unq1
 
    /* Flop R16 to R18_retime with retiming registers*/
    
-   dff2_unq5  d_samp_r1 (
+   dff2_unq7  d_samp_r1 (
 				.in(hit_R16S) , 
 				.clk(clk) , .reset(rst), .en(1'b1),
 				.out(hit_R18S_retime));
    
-   dff2_unq5  d_samp_r2(
+   dff2_unq7  d_samp_r2(
 			       .in(color_R16U) , 
 			       .clk(clk) , .reset(rst), .en(1'b1),
 			       .out(color_R18U_retime));
    
-   dff_unq9  d_samp_r3 (
+   dff_unq10  d_samp_r3 (
 				.in(hit_valid_R16H) , 
 				.clk(clk) , .reset(rst), .en(1'b1),
 				.out(hit_valid_R18H_retime));

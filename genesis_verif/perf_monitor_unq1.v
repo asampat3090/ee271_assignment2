@@ -23,7 +23,7 @@
 // Parameter Axis 	= 3
 // Parameter SigFig 	= 24
 // Parameter Colors 	= 3
-// Parameter PipelineDepth 	= 2
+// Parameter PipelineDepth 	= 5
 //
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 //
@@ -73,7 +73,7 @@
 //
 // Colors (_GENESIS2_INHERITANCE_PRIORITY_) = 3
 //
-// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 2
+// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 5
 //
 
 module perf_monitor_unq1 
@@ -105,14 +105,14 @@ module perf_monitor_unq1
 				     .clk(clk) , .reset(rst), .en(1'b1),
 				     .out(poly_RnnS));
 
-	dff3_unq3  d_011 (
+	dff3_unq9  d_011 (
 					 .in(poly_R16S) , 
 				     .clk(clk) , .reset(rst), .en(1'b1),
 				     .out(poly_Rn1S));
 					 			 
 					 						
 	
-	dff_unq14  d_04 (
+	dff_unq15  d_04 (
 					 .in({validSamp_R16H, isQuad_R16H}) , 
 				     .clk(clk) , .reset(rst), .en(1'b1),
 				     .out({validSamp_RnnH, isQuad_RnnH}));	        

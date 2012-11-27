@@ -67,15 +67,15 @@ module dff2_unq8 (
 		output logic [23:0] out[2:0]
 		);	
    
-   dff_unq13  dff_0 
+   dff_unq11  dff_0 
      (.in(in[0]) , 
       .clk(clk) , .reset(reset), .en(en),
       .out(out[0]));
-   dff_unq13  dff_1 
+   dff_unq11  dff_1 
      (.in(in[1]) , 
       .clk(clk) , .reset(reset), .en(en),
       .out(out[1]));
-   dff_unq13  dff_2 
+   dff_unq11  dff_2 
      (.in(in[2]) , 
       .clk(clk) , .reset(reset), .en(en),
       .out(out[2]));

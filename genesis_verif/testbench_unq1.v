@@ -19,12 +19,12 @@
 //
 //	From 'generate' statement (priority=5):
 // Parameter Radix 	= 10
-// Parameter PipesBox 	= 3
+// Parameter PipesBox 	= 2
 // Parameter Axis 	= 3
 // Parameter DUT_obj 	= Data structure of type rast
 // Parameter PipesIter 	= 1
-// Parameter PipesHash 	= 2
-// Parameter PipesSamp 	= 2
+// Parameter PipesHash 	= 3
+// Parameter PipesSamp 	= 5
 // Parameter Vertices 	= 3
 // Parameter Colors 	= 3
 // Parameter SigFig 	= 24
@@ -73,13 +73,13 @@
 //
 // Colors (_GENESIS2_INHERITANCE_PRIORITY_) = 3
 //
-// PipesBox (_GENESIS2_INHERITANCE_PRIORITY_) = 3
+// PipesBox (_GENESIS2_INHERITANCE_PRIORITY_) = 2
 //
 // PipesIter (_GENESIS2_INHERITANCE_PRIORITY_) = 1
 //
-// PipesHash (_GENESIS2_INHERITANCE_PRIORITY_) = 2
+// PipesHash (_GENESIS2_INHERITANCE_PRIORITY_) = 3
 //
-// PipesSamp (_GENESIS2_INHERITANCE_PRIORITY_) = 2
+// PipesSamp (_GENESIS2_INHERITANCE_PRIORITY_) = 5
 //
 // DUT_obj (_GENESIS2_INHERITANCE_PRIORITY_) = 
 //	InstancePath:top_rast.rast (rast)

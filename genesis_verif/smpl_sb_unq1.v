@@ -24,7 +24,7 @@
 // Parameter Axis 	= 3
 // Parameter SigFig 	= 24
 // Parameter Colors 	= 3
-// Parameter PipelineDepth 	= 2
+// Parameter PipelineDepth 	= 5
 //
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 //
@@ -78,7 +78,7 @@
 //
 // Colors (_GENESIS2_INHERITANCE_PRIORITY_) = 3
 //
-// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 2
+// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 5
 //
 // Filename (_GENESIS2_INHERITANCE_PRIORITY_) = sb_log/smpl_sb.log
 //
@@ -199,18 +199,18 @@ module smpl_sb_unq1
 				     .clk(clk) , .reset(rst), .en(1'b1),
 				     .out(poly_RnnS));
 					 
-	dff2_unq8  d_02 (
+	dff2_unq9  d_02 (
 					 .in(color_R16U) , 
 				     .clk(clk) , .reset(rst), .en(1'b1),
 				     .out(color_RnnU));
 	
-	dff2_unq9  d_03 (
+	dff2_unq10  d_03 (
 					 .in(sample_R16S) , 
 				     .clk(clk) , .reset(rst), .en(1'b1),
 				     .out(sample_RnnS));				 
 					 						
 	
-	dff_unq14  d_04 (
+	dff_unq15  d_04 (
 					 .in({validSamp_R16H, isQuad_R16H}) , 
 				     .clk(clk) , .reset(rst), .en(1'b1),
 				     .out({validSamp_RnnH, isQuad_RnnH}));	

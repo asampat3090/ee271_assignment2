@@ -79,16 +79,16 @@ print { $self->{OutfileHandle} } ' * *******************************************
                             Val=>3, Min=>1, Step=>1, 
                             Doc=>"Number of color channels");
  my $pipes_box  = parameter(Name=>'PipesBox',
-                            Val=>3, Min=>1, Step=>1, 
+                            Val=>2, Min=>1, Step=>1, 
                             Doc=>"Number of Pipe Stages in bbox module");
  my $pipes_iter = parameter(Name=>'PipesIter',
                             Val=>1, Min=>1, Step=>1, 
                             Doc=>"Number of Pipe Stages in iter module");
  my $pipes_hash = parameter(Name=>'PipesHash',
-                            Val=>2, Min=>1, Step=>1, 
+                            Val=>3, Min=>1, Step=>1, 
                             Doc=>"Number of pipe stages in hash module");
  my $pipes_samp = parameter(Name=>'PipesSamp',
-                            Val=>2, Min=>1, Step=>1, 
+                            Val=>5, Min=>1, Step=>1, 
                             Doc=>"Number of Pipe Stages in sample module");
 print { $self->{OutfileHandle} } '';print { $self->{OutfileHandle} } "\n"; 
 print { $self->{OutfileHandle} } 'module '; print { $self->{OutfileHandle} } mname(); print { $self->{OutfileHandle} } '  ';print { $self->{OutfileHandle} } "\n"; 

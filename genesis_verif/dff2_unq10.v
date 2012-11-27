@@ -21,7 +21,7 @@
 // Parameter BitWidth 	= 24
 // Parameter ArraySize1 	= 2
 // Parameter Retime 	= NO
-// Parameter PipelineDepth 	= 3
+// Parameter PipelineDepth 	= 5
 //
 //		---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 //
@@ -56,7 +56,7 @@
 //
 // ArraySize1 (_GENESIS2_INHERITANCE_PRIORITY_) = 2
 //
-// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 3
+// PipelineDepth (_GENESIS2_INHERITANCE_PRIORITY_) = 5
 //
 // Retime (_GENESIS2_INHERITANCE_PRIORITY_) = NO
 //
@@ -67,11 +67,11 @@ module dff2_unq10 (
 		output logic [23:0] out[1:0]
 		);	
    
-   dff_unq10  dff_0 
+   dff_unq14  dff_0 
      (.in(in[0]) , 
       .clk(clk) , .reset(reset), .en(en),
       .out(out[0]));
-   dff_unq10  dff_1 
+   dff_unq14  dff_1 
      (.in(in[1]) , 
       .clk(clk) , .reset(reset), .en(en),
       .out(out[1]));
